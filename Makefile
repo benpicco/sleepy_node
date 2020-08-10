@@ -31,6 +31,9 @@ USEMODULE += gnrc_netif_bus
 # only print on error
 CFLAGS += -DCONFIG_SKIP_BOOT_MSG
 
+# we are a CoAP client
+USEMODULE += gcoap
+
 include $(RIOTBASE)/Makefile.include
 
 # Set a custom channel if needed
