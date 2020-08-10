@@ -7,13 +7,16 @@ DEVELHELP=1
 BOARD ?= samr21-xpro
 
 # This has to be the absolute path to the RIOT base directory:
-RIOTBASE ?= $(CURDIR)/../..
+RIOTBASE ?= $(CURDIR)/../RIOT
 
 # We neet RTC to wake from hibernate
 FEATURES_REQUIRED += periph_rtc
 
 # Modules to include:
 USEMODULE += shell_commands
+
+# make sure we don't always start with the same random seed
+USEMODULE += puf_sram
 
 # gnrc is a meta module including all required, basic gnrc networking modules
 USEMODULE += gnrc
