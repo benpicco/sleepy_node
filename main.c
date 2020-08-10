@@ -8,7 +8,7 @@
 #include "net/gnrc/netif.h"
 
 #define NETIF_NUM_MAX               (2)
-#define BORDER_ROUTER_TIMEOUT_US    (1000 * US_PER_MS)
+#define BORDER_ROUTER_TIMEOUT_US    (2500 * US_PER_MS)
 
 /* address used for the host by gnrc_border_router */
 #define COAP_SERVER_PREFIX (0xfdeadbee000f0000ULL)
