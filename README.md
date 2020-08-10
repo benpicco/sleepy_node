@@ -18,3 +18,7 @@ The server is then started with
 
 `fdea:dbee:f::1` was configured as an IP for the host computer by the SLIP startup script.
 
+### Client setup
+
+Just flash this demo to a node.
+It should periodically connect to the border router & host computer to fetch the time and print it, then go back to sleep. 
