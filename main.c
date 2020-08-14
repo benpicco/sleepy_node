@@ -46,7 +46,9 @@ static void pm_hibernate_for(unsigned sec)
     rtc_get_time(&now);
     now.tm_sec += sec;
     rtc_set_alarm(&now, _rtc_alarm, NULL);
+#ifdef MODULE_PM_LAYERED
     pm_set(0);
+#endif
 }
 
 struct time_ctx {
