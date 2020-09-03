@@ -15,9 +15,6 @@ FEATURES_REQUIRED += periph_rtc
 # Modules to include:
 USEMODULE += shell_commands
 
-# make sure we don't always start with the same random seed
-FEATURES_OPTIONAL += puf_sram
-
 # gnrc is a meta module including all required, basic gnrc networking modules
 USEMODULE += gnrc
 USEMODULE += gnrc_netdev_default
@@ -41,6 +38,9 @@ ifeq ($(BOARD),native)
   USEMODULE += socket_zep
   TERMFLAGS += -z [::1]:17754
   TERMFLAGS += -Z 00:AA:BB:CC:DD:EE:FF:23
+else
+  # make sure we don't always start with the same random seed
+  USEMODULE += puf_sram
 endif
 
 include $(RIOTBASE)/Makefile.include
