@@ -6,6 +6,7 @@
 #include "mutex.h"
 #include "net/gcoap.h"
 #include "net/gnrc/netif.h"
+#include "net/gnrc/ipv6/nib/ft.h"
 
 #define NETIF_NUM_MAX               (2)
 #define BORDER_ROUTER_TIMEOUT_US    (2500 * US_PER_MS)
@@ -133,6 +134,31 @@ static int coap_get_time(void)
 }
 
 
+int gnrc_get_border_router(unsigned iface, ipv6_addr_t *out)
+{
+    gnrc_ipv6_nib_ft_t entry;
+    void *state = NULL;
+
+    while (gnrc_ipv6_nib_ft_iter(NULL, iface, &state, &entry)) {
+
+        /* entry must be default route */
+        if (entry.dst_len && !ipv6_addr_is_unspecified(&entry.dst)) {
+            continue;
+        }
+
+        if (!ipv6_addr_is_unspecified(&entry.next_hop)) {
+
+            if (out) {
+                *out = entry.next_hop;
+            }
+
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
 int main(void)
 {
     msg_t _main_msg_queue[4];
@@ -161,6 +187,9 @@ int main(void)
     msg_t m;
     do {
         if (xtimer_msg_receive_timeout(&m, BORDER_ROUTER_TIMEOUT_US) < 0) {
+            if (gnrc_get_border_router(0, NULL) == 0) {
+                break;
+            }
             puts(">> border router timeout <<");
             _gnrc_netif_config(0, NULL);
             goto out;
