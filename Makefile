@@ -37,7 +37,10 @@ USEMODULE += gcoap
 ifeq ($(BOARD),native)
   USEMODULE += socket_zep
   TERMFLAGS += -z [::1]:17754
-#  TERMFLAGS += -Z 00:AA:BB:CC:DD:EE:FF:23
+
+  ifneq (,$(ZEP_MAC))
+    TERMFLAGS += --eui64=$(ZEP_MAC)
+  endif
 else
   # make sure we don't always start with the same random seed
   USEMODULE += puf_sram
