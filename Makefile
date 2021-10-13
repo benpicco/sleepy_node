@@ -17,7 +17,7 @@ USEMODULE += shell_commands
 
 # gnrc is a meta module including all required, basic gnrc networking modules
 USEMODULE += gnrc
-USEMODULE += gnrc_netdev_default
+USEMODULE += netdev_default
 
 # manually initialize the network interface
 USEMODULE += gnrc_netif_init_devs
